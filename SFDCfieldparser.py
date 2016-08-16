@@ -15,7 +15,7 @@ root = tree.getroot()
 
 def get_fields_list_CSV(root):
     with open(sourcefile+'.csv', 'w') as csvfile:
-        header_row=['fullName','label','externalId','type', 'required', 'referenceTo', 'relationshipName','relationshipLabel']
+        header_row=['fullName','label','externalId','type', 'formula','formulaTreatBlanksAs', 'unique', 'required', 'referenceTo', 'relationshipName','relationshipLabel']
         writer = csv.DictWriter(csvfile, fieldnames=header_row,delimiter=',',quotechar='"', quoting=csv.QUOTE_MINIMAL, extrasaction='ignore')
         writer.writeheader()
         for e in root.iter('{http://soap.sforce.com/2006/04/metadata}fields'):
