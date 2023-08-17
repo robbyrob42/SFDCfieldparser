@@ -24,26 +24,40 @@ def xml_to_json(sourcefile):
 
     # Iterate over the <fields> elements
     for fields in root.findall('{http://soap.sforce.com/2006/04/metadata}fields'):
-        # Find the <fullname>, <label>, and <type> elements and get their text
-        if fields.find('{http://soap.sforce.com/2006/04/metadata}fullName') is not None:
-            fullname = fields.find('{http://soap.sforce.com/2006/04/metadata}fullName').text
-        else:
-            fullname = 'None'
-        if fields.find('{http://soap.sforce.com/2006/04/metadata}label') is not None:
-            label = fields.find('{http://soap.sforce.com/2006/04/metadata}label').text
-        else:
-            label = 'None'
-        if fields.find('{http://soap.sforce.com/2006/04/metadata}type') is not None:
-            type_ = fields.find('{http://soap.sforce.com/2006/04/metadata}type').text
-        else:
-            type_ = 'None'
+        # create a dictionary for this <fields> element
+        fields_dict = {}
 
-        # Store the text in a dictionary
-        dict_ = {'fullname': fullname, 'label': label, 'type': type_}
-        print(dict_)
+        # iterate over the child elements of <fields>
+        for child in fields:
+            # store the text of the element in the dictionary
+            # using the tag (without namespace) as the key
+            fields_dict[child.tag.split('}')[-1]] = child.text
 
-        # Append the dictionary to the list
-        dict_list.append(dict_)
+        # append the dictionary to the list
+        dict_list.append(fields_dict)
+
+    # # Iterate over the <fields> elements
+    # for fields in root.findall('{http://soap.sforce.com/2006/04/metadata}fields'):
+    #     # Find the <fullname>, <label>, and <type> elements and get their text
+    #     if fields.find('{http://soap.sforce.com/2006/04/metadata}fullName') is not None:
+    #         fullname = fields.find('{http://soap.sforce.com/2006/04/metadata}fullName').text
+    #     else:
+    #         fullname = 'None'
+    #     if fields.find('{http://soap.sforce.com/2006/04/metadata}label') is not None:
+    #         label = fields.find('{http://soap.sforce.com/2006/04/metadata}label').text
+    #     else:
+    #         label = 'None'
+    #     if fields.find('{http://soap.sforce.com/2006/04/metadata}type') is not None:
+    #         type_ = fields.find('{http://soap.sforce.com/2006/04/metadata}type').text
+    #     else:
+    #         type_ = 'None'
+    #
+    #     # Store the text in a dictionary
+    #     dict_ = {'fullname': fullname, 'label': label, 'type': type_}
+    #     print(dict_)
+    #
+    #     # Append the dictionary to the list
+    #     dict_list.append(dict_)
 
     # Write the list of dictionaries to a JSON file
     with open(filename_out, 'w') as file:
