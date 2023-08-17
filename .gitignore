@@ -1,0 +1,9 @@
+#ignore jetbrains files
+.idea
+*.iml
+*.iws
+*.ipr
+
+.DS_Store
+
+.python-version
