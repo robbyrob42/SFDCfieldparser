@@ -7,3 +7,7 @@
 .DS_Store
 
 .python-version
+
+#ignore .object and .json files
+*.object
+*.json
